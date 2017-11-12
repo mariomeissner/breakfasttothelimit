@@ -1,0 +1,13 @@
+INPUT MODULE
+-Work location
+-Work time start
+-Travel method
+
+TIME SYNC MODULE
+-Request to host
+-Recompute remaining time
+
+LIGHTS MODULE
+-Connect to the lights
+-Manage light colors based on remaining time
+
