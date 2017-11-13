@@ -15,6 +15,4 @@ for i in range(num_users):
     names[i] = input("What's the name of user %d?: " % (i))
     locations[i] = input("Where does %s go to work?: " % names[i])
 
-    #nderung
-
 
