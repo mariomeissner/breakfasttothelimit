@@ -27,7 +27,7 @@ class Manager:
 
 
     def remaining_time():
-        """Connect to the API and request the time needed to to go work"""
+        """Connect to the API and request the time needed to go work"""
 
     
 
