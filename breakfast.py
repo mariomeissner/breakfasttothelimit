@@ -54,10 +54,10 @@ class Lamp:
         colour = self.white
 
     def set_white(self):
-        self.colour = white
+        self.colour = self.white
 
     def set_orange(self):
-        self.colour = orange
+        self.colour = self.orange
 
     def set_red(self):
-        self.colour = red
+        self.colour = self.red
