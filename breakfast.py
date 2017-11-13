@@ -21,5 +21,14 @@ class Manager:
             self.work_locations[i] = input("Where does %s go to work?: " % self.names[i])
 
 class Roommate:
+    """ Class Roommate creates and organizes a Roommate's data"""
+    def _init_(self, String name, String work_location, int work_time, String transport):
+        self.name = name
+        self.work_location = work_location
+        self.work_time = work_time
+        self.transport = transport
+
+    
 
 class Lamp:
+    """ Stores Lamp's data e.g. colour"""
