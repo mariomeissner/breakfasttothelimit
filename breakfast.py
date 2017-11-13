@@ -43,5 +43,10 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. colour"""
-    def __init__(self, colour):
-        self.colour = colour
+    white = 0
+    yellow = 1
+    red = 2
+
+    def __init__(self):
+        colour = self.white
+
