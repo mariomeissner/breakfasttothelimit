@@ -26,7 +26,7 @@ class Manager:
         print("System is ready to go")
 
 
-    def remaining_time()
+    def remaining_time():
         """Connect to the API and request the time needed to to go work"""
 
     
