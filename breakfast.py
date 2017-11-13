@@ -32,3 +32,5 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. colour"""
+    def _init_(self, int colour):
+        self.colour = colour
