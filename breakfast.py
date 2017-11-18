@@ -1,32 +1,38 @@
 # -*- coding: utf-8 -*-
-
+import datetime
+import googlemaps
 """ Optimize your breakfast!
 
 Project: Breakfast To The Limit
 Authors: M. Meissner and M. Mueller
 
 """
+API_KEY = 'AIzaSyAdmTyjsNy1iwfx4R9_L8EX3EUUdia_ve0'
+if __name__ == '__main__':
+    pass
+
 class Manager:
     """ Global manager that queries the API's and updates lights according to remaining time"""
 
     def __init__(self):
         """ Set up the system by asking the user for the initializing information """
-        self.num_users = int(input("How many users will use the system?: "))
-        self.wg_location = input("Where do the users live? :")
-        self.roommates = []
-        self.lamps = []
-        self.transport = []
-        self.names = []
+        num_users = int(input("How many users will use the system?: "))
+        wg_location = input("Where do the users live? :")
+        roommates = []
 
-        for i in range(self.num_users):
+        for i in range(num_users):
 
             name = input("What's the name of user %d?: " % (i))
-            working_location = input("Where does %s go to work?: " % self.names[i])
+            working_location = input("Where does %s go to work?: " % name)
             start_time = input("When does %s start working?: ")
             transport = input("")
-            self.roommates.append(Roommate(name, working_location, start_time, transport))
+            lamp = Lamp(i)
+            roommates.append(Roommate(name, working_location, 
+                start_time, transport, lamp))
 
-        print("System is ready to go")
+        gmaps = GMapsClient(wg_location)
+        
+        print("System initialization successfull")
 
 
     def remaining_time(self):
@@ -36,27 +42,49 @@ class Manager:
 
 class Roommate:
     """ Class Roommate creates and organizes a Roommate's data"""
-    def __init__(self, name, work_location, start_time, transport):
+    def __init__(self, name, work_location, start_time, transport, lamp):
         self.name = name
         self.work_location = work_location
         self.start_time = start_time
         self.transport = transport
+        self.lamp = lamp
 
     
+
 class Lamp:
-    """ Stores Lamp's data e.g. colour"""
+    """ Stores Lamp's data e.g. color"""
     white = 0
     orange = 1
     red = 2
 
-    def __init__(self):
-        colour = self.white
+    def __init__(self, ID):
+        color = self.white
+        #TODO: Connect to the lights API
 
     def set_white(self):
-        self.colour = self.white
+        self.color = self.white
+        #TODO: Send color change request
 
     def set_orange(self):
-        self.colour = self.orange
+        self.color = self.orange
+        #TODO: Send color change request
 
     def set_red(self):
-        self.colour = self.red
+        self.color = self.red
+        #TODO: Send color change request
+
+class GMapsClient:
+
+    def __init__(self, wg_location):
+        client = googlemaps.Client(key=API_KEY)
+        self.wg_location = wg_location
+
+    def travel_time(destination):
+        now = datetime.now()
+        directions_result = client.directions(self.wg_location,
+                                            destination,
+                                            mode="transit",
+                                            departure_time=now)
+
+        #TODO: Extract the travel time and return it
+        return 0
