@@ -87,5 +87,5 @@ class GMapsClient:
         directions_result = client.directions(self.wg_location, destination, outputFormat=json, mode="transit", departure_time=now, transport_mode=travelmode)
         duration = (directions_result['rows']['elements']['duration']['value'])
         #json stores information in dictionaries
-        #TODO: Extract the travel time and return it
+        #TODO: test if extracting and returning works
         return duration
