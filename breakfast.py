@@ -81,9 +81,11 @@ class GMapsClient:
         client = googlemaps.Client(key=API_KEY)
         self.wg_location = wg_location
 
-    def travel_time(destination):
+    def travel_time(destination, travelmode):
+        #calculates travel time with destination and travelmode
         now = datetime.time()
-        directions_result = client.directions(self.wg_location, destination, mode="transit", departure_time=now)
-
+        directions_result = client.directions(self.wg_location, destination, outputFormat=json, mode="transit", departure_time=now, transport_mode=travelmode)
+        duration = (directions_result['rows']['elements']['duration']['value'])
+        #json stores information in dictionaries
         #TODO: Extract the travel time and return it
-        return 0
+        return duration
