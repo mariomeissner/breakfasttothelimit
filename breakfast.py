@@ -82,11 +82,8 @@ class GMapsClient:
         self.wg_location = wg_location
 
     def travel_time(destination):
-        now = datetime.now()
-        directions_result = client.directions(self.wg_location,
-                                            destination,
-                                            mode="transit",
-                                            departure_time=now)
+        now = datetime.time()
+        directions_result = client.directions(self.wg_location, destination, mode="transit", departure_time=now)
 
         #TODO: Extract the travel time and return it
         return 0
