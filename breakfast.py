@@ -54,26 +54,27 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. color"""
+    
     #TODO: Use this to send HTTP to Lamps
     #http://docs.python-requests.org/en/master/user/quickstart/
-    white = 0
-    orange = 1
-    red = 2
+    white = {"on":"true", "bri":255, "sat":255, "hue":6500, "ct":153}
+    orange = {"on":"true", "bri":255, "sat":255, "hue":9000}
+    red = {"on":"true", "bri":255, "sat":255, "hue":0}
 
-    def __init__(self, ID):
-        color = self.white
+    def __init__(self):
+        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
         #TODO: Connect to the lights API
 
-    def set_white(self):
-        self.color = self.white
+    def set_white(self,id):
+        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.white)
         #TODO: Send color change request
 
-    def set_orange(self):
-        self.color = self.orange
+    def set_orange(self,id):
+        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.orange)
         #TODO: Send color change request
 
-    def set_red(self):
-        self.color = self.red
+    def set_red(self,id):
+        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.red)
         #TODO: Send color change request
 
 class GMapsClient:
