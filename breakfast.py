@@ -11,8 +11,6 @@ Authors: M. Meissner and M. Mueller
 
 """
 API_KEY = 'AIzaSyAdmTyjsNy1iwfx4R9_L8EX3EUUdia_ve0'
-if __name__ == '__main__':
-    pass
 
 class Manager:
     """ Global manager that queries the API's and updates lights according to remaining time"""
@@ -81,16 +79,24 @@ class Lamp:
 class GMapsClient:
 
     def __init__(self, wg_location):
-        client = googlemaps.Client(key=API_KEY)
+        self.client = googlemaps.Client(key=API_KEY)
         self.wg_location = wg_location
 
-    def travel_time(destination, travelmode):
+    def travel_time(self, destination, transitmode):
         #calculates travel time with destination and travelmode
         now = datetime.time()
         #TODO: Maybe this is useful?
         #https://developers.google.com/maps/documentation/distance-matrix/start?hl=de
-        directions_result = client.directions(self.wg_location, destination, outputFormat=json, mode="transit", departure_time=now, transport_mode=travelmode)
+        directions_result = self.client.directions(self.wg_location, 
+            destination, mode="transit", departure_time=now
+            )
+        # output_format='json', transit_mode=transitmode ??
         duration = (directions_result['rows']['elements']['duration']['value'])
         #json stores information in dictionaries
         #TODO: test if extracting and returning works
         return duration
+
+
+if __name__ == '__main__':
+    gmaps = GMapsClient("Munich")
+    print(gmaps.travel_time("Berlin", "train"))
