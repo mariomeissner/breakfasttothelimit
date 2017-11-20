@@ -2,6 +2,7 @@
 import datetime
 import json
 import googlemaps
+import requests
 
 """ Optimize your breakfast!
 
@@ -55,6 +56,8 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. color"""
+    #TODO: Use this to send HTTP to Lamps
+    #http://docs.python-requests.org/en/master/user/quickstart/
     white = 0
     orange = 1
     red = 2
@@ -84,6 +87,8 @@ class GMapsClient:
     def travel_time(destination, travelmode):
         #calculates travel time with destination and travelmode
         now = datetime.time()
+        #TODO: Maybe this is useful?
+        #https://developers.google.com/maps/documentation/distance-matrix/start?hl=de
         directions_result = client.directions(self.wg_location, destination, outputFormat=json, mode="transit", departure_time=now, transport_mode=travelmode)
         duration = (directions_result['rows']['elements']['duration']['value'])
         #json stores information in dictionaries
