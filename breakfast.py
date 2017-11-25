@@ -63,19 +63,15 @@ class Lamp:
 
     def __init__(self):
         requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
-        #TODO: Connect to the lights API
 
     def set_white(self,id):
         requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.white)
-        #TODO: Send color change request
 
     def set_orange(self,id):
         requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.orange)
-        #TODO: Send color change request
 
     def set_red(self,id):
         requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.red)
-        #TODO: Send color change request
 
 class GMapsClient:
 
