@@ -48,13 +48,10 @@ class Roommate:
         self.work_location = work_location
         self.start_time = start_time
         self.transport = transport
-        self.lamp = lamp
-
-    
+        self.lamp = lamp   
 
 class Lamp:
-    """ Stores Lamp's data e.g. color"""
-    
+    """ Stores Lamp's data e.g. color"""  
     #TODO: Use this to send HTTP to Lamps
     #http://docs.python-requests.org/en/master/user/quickstart/
     white = {"on":"true", "bri":255, "sat":255, "hue":6500, "ct":153}
@@ -62,16 +59,20 @@ class Lamp:
     red = {"on":"true", "bri":255, "sat":255, "hue":0}
 
     def __init__(self):
-        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
 
-    def set_white(self,id):
-        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.white)
+    def set_white(self,idL):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.white)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.white)
 
-    def set_orange(self,id):
-        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.orange)
-
-    def set_red(self,id):
-        requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(id) + "/state", data=self.red)
+    def set_orange(self,idL):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.orange)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.orange)
+        
+    def set_red(self,idL):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.red)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.red)
 
 class GMapsClient:
 
