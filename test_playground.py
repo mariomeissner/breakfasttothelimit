@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import googlemaps
 from datetime import datetime
+
 
 gmaps = googlemaps.Client(key='AIzaSyAdmTyjsNy1iwfx4R9_L8EX3EUUdia_ve0')
 
