@@ -58,21 +58,22 @@ class Lamp:
     orange = {"on":"true", "bri":255, "sat":255, "hue":9000}
     red = {"on":"true", "bri":255, "sat":255, "hue":0}
 
-    def __init__(self):
+    def __init__(self,i):
         #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
         requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        self.lampID = i
 
-    def set_white(self,idL):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.white)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.white)
+    def set_white(self):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
 
-    def set_orange(self,idL):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.orange)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.orange)
+    def set_orange(self):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
         
-    def set_red(self,idL):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.red)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(idL) + "/state", data=self.red)
+    def set_red(self):
+        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
+        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
 
 class GMapsClient:
 
@@ -80,21 +81,19 @@ class GMapsClient:
         self.client = googlemaps.Client(key=API_KEY)
         self.wg_location = wg_location
 
-    def travel_time(self, destination, transitmode):
+    def travel_time(self, destination):
         #calculates travel time with destination and travelmode
         now = datetime.time()
         #TODO: Maybe this is useful?
         #https://developers.google.com/maps/documentation/distance-matrix/start?hl=de
-        directions_result = self.client.directions(self.wg_location, 
-            destination, mode="transit", departure_time=now
-            )
+        directions_result = self.client.directions(self.wg_location, destination, mode="transit", departure_time=now)
         # output_format='json', transit_mode=transitmode ??
-        duration = (directions_result['rows']['elements']['duration']['value'])
+        duration = (directions_result[0]['legs'][0]['duration']['value'])
         #json stores information in dictionaries
         #TODO: test if extracting and returning works
         return duration
 
 
 if __name__ == '__main__':
-    gmaps = GMapsClient("Munich")
-    print(gmaps.travel_time("Berlin", "train"))
+    gmaps = GMapsClient("Muenchen")
+    print(gmaps.travel_time("Berlin"))
