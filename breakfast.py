@@ -59,21 +59,21 @@ class Lamp:
     red = {"on":"true", "bri":255, "sat":255, "hue":0}
 
     def __init__(self,i):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
         self.lampID = i
 
     def set_white(self):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
+        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
+        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
 
     def set_orange(self):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
+        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
+        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
         
     def set_red(self):
-        #requests.put("http://10.28.9.123/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
-        requests.put("http://localhost/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
+        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
+        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
 
 class GMapsClient:
 
