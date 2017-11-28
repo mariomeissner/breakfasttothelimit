@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, date, time
 import json
 import googlemaps
 import requests
@@ -17,27 +17,35 @@ class Manager:
 
     def __init__(self):
         """ Set up the system by asking the user for the initializing information """
-        num_users = int(input("How many users will use the system?: "))
-        wg_location = input("Where do the users live? :")
-        roommates = []
+        self.num_users = int(input("How many users will use the system?: "))
+        self.wg_location = input("Where do the users live? :")
+        self.roommates = []
 
-        for i in range(num_users):
+        for i in range(self.num_users):
 
             name = input("What's the name of user %d?: " % (i))
             working_location = input("Where does %s go to work?: " % name)
             start_time = input("When does %s start working?: ")
             transport = input("")
             lamp = Lamp(i)
-            roommates.append(Roommate(name, working_location, 
+            self.roommates.append(Roommate(name, working_location, 
                 start_time, transport, lamp))
 
-        gmaps = GMapsClient(wg_location)
+        self.gmaps = GMapsClient(self.wg_location)
         
         print("System initialization successfull")
 
 
-    def remaining_time(self):
-        """Connect to the API and request the time needed to to go work"""
+    def remaining_time(self, r):
+         """Connect to the API and request the time needed to to go work"""
+        #travel_time = self.gmaps.travel_time
+        d = datetime.now()
+        time_Seconds = (d.hour*3600 + d.minute*60 + d.second)
+        travel_Time = self.gmaps.travel_time(r[0][1])
+        difference = time_Seconds - travel_Time
+        print(time_Seconds)
+
+       
 
     
 
@@ -97,3 +105,4 @@ class GMapsClient:
 if __name__ == '__main__':
     gmaps = GMapsClient("Olympiazentrum, 80809 München")
     print(gmaps.travel_time("Lothstraße 64, 80335 München")/60)
+    
