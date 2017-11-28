@@ -43,7 +43,7 @@ class Manager:
         time_Seconds = (d.hour*3600 + d.minute*60 + d.second)
         travel_Time = self.gmaps.travel_time(r[0][1])
         difference = time_Seconds - travel_Time
-        print(time_Seconds)
+        return difference
 
        
 
