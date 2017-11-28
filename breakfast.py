@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from datetime import datetime
 import json
 import googlemaps
 import requests
@@ -83,7 +83,7 @@ class GMapsClient:
 
     def travel_time(self, destination):
         #calculates travel time with destination and travelmode
-        now = datetime.time()
+        now = datetime.now()
         #TODO: Maybe this is useful?
         #https://developers.google.com/maps/documentation/distance-matrix/start?hl=de
         directions_result = self.client.directions(self.wg_location, destination, mode="transit", departure_time=now)
@@ -95,5 +95,5 @@ class GMapsClient:
 
 
 if __name__ == '__main__':
-    gmaps = GMapsClient("Muenchen")
-    print(gmaps.travel_time("Berlin"))
+    gmaps = GMapsClient("Olympiazentrum, 80809 München")
+    print(gmaps.travel_time("Lothstraße 64, 80335 München")/60)
