@@ -27,7 +27,7 @@ class Manager:
             working_location = input("Where does %s go to work?: " % name)
             start_time = input("When does %s start working?: ")
             transport = input("")
-            lamp = Lamp(i)
+            lamp = Lamp(i+1)
             self.roommates.append(Roommate(name, working_location, 
                 start_time, transport, lamp))
 
@@ -37,8 +37,7 @@ class Manager:
 
 
     def remaining_time(self, r):
-         """Connect to the API and request the time needed to to go work"""
-        #travel_time = self.gmaps.travel_time
+        """Connect to the API and request the time needed to to go work"""
         d = datetime.now()
         time_Seconds = (d.hour*3600 + d.minute*60 + d.second)
         travel_Time = self.gmaps.travel_time(r[0][1])
@@ -67,21 +66,21 @@ class Lamp:
     red = {"on":"true", "bri":255, "sat":255, "hue":0}
 
     def __init__(self,i):
-        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
-        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
+        #requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/groups/0/state", data=self.white)
         self.lampID = i
 
     def set_white(self):
-        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
-        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
+        requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
+        #requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.white)
 
     def set_orange(self):
-        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
-        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
+        requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
+        #requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.orange)
         
     def set_red(self):
-        #requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
-        requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
+        requests.put("http://10.28.209.13:9003/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
+        #requests.put("http://localhost:80/debug/clip.html/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/" + str(self.lampID) + "/state", data=self.red)
 
 class GMapsClient:
 
@@ -103,6 +102,10 @@ class GMapsClient:
 
 
 if __name__ == '__main__':
+    #manager = Manager()
     gmaps = GMapsClient("Olympiazentrum, 80809 München")
-    print(gmaps.travel_time("Lothstraße 64, 80335 München")/60)
+    print(gmaps.travel_time("Lothstraße 64, 80335 München"))
+    l1 = Lamp(0)
+    l1.set_red()
+
     
