@@ -5,6 +5,8 @@ import googlemaps
 import requests
 from time import sleep
 
+from builtins import print
+
 """ Optimize your breakfast!
 
 Project: Breakfast To The Limit
@@ -21,7 +23,7 @@ class Manager:
         #self.num_users = int(input("How many users will use the system?: "))
         #self.wg_location = input("Where do the users live? :")
         self.num_users = 1
-        self.wg_location = "Olympiazentrum, 80809, Munich"
+        self.wg_location = "Olympiazentrum, Munich"
         self.roommates = []
 
         for i in range(self.num_users):
@@ -32,10 +34,10 @@ class Manager:
             #start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
             #self.start_time = start_time_hour + start_time_minute
             name = 'mario'
-            working_location = 'Neuperlach South'
-            start_time_hour = 21
-            start_time_minute = 20
-            self.start_time = start_time_hour + start_time_minute
+            working_location = 'Neuperlach Süd, Munich'
+            start_time_hour = 23
+            start_time_minute = 18
+            self.start_time = start_time_hour*3600 + start_time_minute*60
             lamp = Lamp(i+1)
             self.roommates.append(Roommate(name, working_location, 
                 self.start_time, lamp))
@@ -49,13 +51,10 @@ class Manager:
         """Connect to the API and request the time needed to to go work"""
         d = datetime.now()
         time_Seconds = (d.hour*3600 + d.minute*60 + d.second)
-        travel_Time = self.gmaps.travel_time(self.wg_location)
-        difference =  self.start_time - (time_Seconds + int(travel_Time))
+        travel_Time = self.gmaps.travel_time(self.roommates[i].work_location)
+        difference = self.start_time - (time_Seconds + int(travel_Time))
         return difference
 
-       
-
-    
 
 class Roommate:
     """ Class Roommate creates and organizes a Roommate's data"""
@@ -67,8 +66,6 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. color"""  
-    #TODO: Use this to send HTTP to Lamps
-    #http://docs.python-requests.org/en/master/user/quickstart/
     w = {"on":True, "bri":255, "sat":255, "hue":6500, "ct":153}
     white = json.dumps(w)
     o = {"on":True, "bri":255, "sat":255, "hue":9000}
@@ -80,7 +77,7 @@ class Lamp:
 
     def __init__(self,i):
         self.lampID = i
-        response = requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.white)
+        #response = requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.white)
         #print(response.text)
 
     def set_white(self):
@@ -108,35 +105,37 @@ class GMapsClient:
     def travel_time(self, destination):
         #calculates travel time with destination and travelmode
         now = datetime.now()
-        #TODO: Maybe this is useful?
-        #https://developers.google.com/maps/documentation/distance-matrix/start?hl=de
-        directions_result = self.client.directions(self.wg_location, destination, mode="transit", departure_time=now)
-        # output_format='json', transit_mode=transitmode ??
+        directions_result = self.client.directions(self.wg_location, 
+            destination, mode="transit", departure_time=now)
         duration = int((directions_result[0]['legs'][0]['duration']['value']))
         #json stores information in dictionaries
-        #TODO: test if extracting and returning works
         return duration
 
 
 if __name__ == '__main__':
+    print("Starting the setup!")
     manager = Manager()
-    while (True):
+    print("Starting main loop!")
+    while True:
         print("Starting new cycle")
         sleep(5)
         for i in range(len(manager.roommates)):
+            print("Roommate %s has %d seconds until he should leave" % (manager.roommates[i].name, manager.remaining_time(i)))
             if int(manager.remaining_time(i)) <= 0:
-                print("Start emergency lamps for roommate %s" % manager.roommates[i])
-                while(True):
-                    #manager.roommates[i].lamp.turn_off()
+                print("Start emergency lamps for roommate %s" % manager.roommates[i].name)
+                while True:
+                    # manager.roommates[i].lamp.turn_off()
                     sleep(0.5)
-                    #manager.roommates[i].lamp.turn_on()
+                    # manager.roommates[i].lamp.turn_on()
                     sleep(0.5)
             elif 0 <= int(manager.remaining_time(i)) <= 60:  
-                print("Change lamp to orange for roommade %s" % % manager.roommates[i])
-                #manager.roommates[i].lamp.set_red()
+                print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
+                # manager.roommates[i].lamp.set_red()
             elif 60 <= int(manager.remaining_time(i)) <= 180:
-                print("Change lamp to orange for roommade %s" % % manager.roommates[i])
-                #manager.roommates[i].lamp.set_orange()      
+                print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
+                # manager.roommates[i].lamp.set_orange()
+            else:
+                print("Still enough time for roommate %s!" % manager.roommates[i].name)
 
     
 

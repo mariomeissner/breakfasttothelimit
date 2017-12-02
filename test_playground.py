@@ -9,8 +9,8 @@ gmaps = googlemaps.Client(key='AIzaSyAdmTyjsNy1iwfx4R9_L8EX3EUUdia_ve0')
 
 # Request directions via public transit
 now = datetime.now()
-directions_result = gmaps.directions("Muenchen",
-                                     "Berlin",
+directions_result = gmaps.directions("Olympiazentrum, Munich",
+                                     "Neuperlach Süd, Munich",
                                      mode="transit",
                                      departure_time=now)
 

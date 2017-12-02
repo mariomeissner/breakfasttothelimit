@@ -13,4 +13,4 @@ response = requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c033
 print(response.text)
 requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/2/state', parsed)
 requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/3/state', parsed)
-print(data)
+print("done")
