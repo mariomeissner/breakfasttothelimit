@@ -18,22 +18,27 @@ class Manager:
 
     def __init__(self):
         """ Set up the system by asking the user for the initializing information """
-        self.num_users = int(input("How many users will use the system?: "))
-        self.wg_location = input("Where do the users live? :")
+        #self.num_users = int(input("How many users will use the system?: "))
+        #self.wg_location = input("Where do the users live? :")
+        self.num_users = 1
+        self.wg_location = "Olympiazentrum, 80809, Munich"
         self.roommates = []
 
         for i in range(self.num_users):
 
-            name = input("What's the name of user %d?: " % (i))
-            working_location = input("Where does %s go to work?: " % name)
-            start_time_hour = int(input("When does %s start working (hour)?: "))*3600
-            start_time_minute = int(input("When does %s start working (minute)?: "))*60
+            #name = input("What's the name of user %d?: " % (i))
+            #working_location = input("Where does %s go to work?: " % name)
+            #start_time_hour = int(input("When does %s start working (hour)?: " % name))*3600
+            #start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
+            #self.start_time = start_time_hour + start_time_minute
+            name = 'mario'
+            working_location = 'Neuperlach South'
+            start_time_hour = 21
+            start_time_minute = 20
             self.start_time = start_time_hour + start_time_minute
-
-            transport = input("")
             lamp = Lamp(i+1)
             self.roommates.append(Roommate(name, working_location, 
-                self.start_time, transport, lamp))
+                self.start_time, lamp))
 
         self.gmaps = GMapsClient(self.wg_location)
         
@@ -54,11 +59,10 @@ class Manager:
 
 class Roommate:
     """ Class Roommate creates and organizes a Roommate's data"""
-    def __init__(self, name, work_location, start_time, transport, lamp):
+    def __init__(self, name, work_location, start_time, lamp):
         self.name = name
         self.work_location = work_location
         self.start_time = start_time
-        self.transport = transport
         self.lamp = lamp   
 
 class Lamp:
@@ -116,24 +120,23 @@ class GMapsClient:
 
 if __name__ == '__main__':
     manager = Manager()
-    print("about to enter while true loop")
     while (True):
-        print("start sleeping")
+        print("Starting new cycle")
         sleep(5)
-        print("Finished sleeping")
         for i in range(len(manager.roommates)):
             if int(manager.remaining_time(i)) <= 0:
-                print("drin")
+                print("Start emergency lamps for roommate %s" % manager.roommates[i])
                 while(True):
-                    manager.roommates[i].lamp.turn_off()
-                    sleep(2)
-                    manager.roommates[i].lamp.turn_on()
-                    sleep(2)
-                    break
+                    #manager.roommates[i].lamp.turn_off()
+                    sleep(0.5)
+                    #manager.roommates[i].lamp.turn_on()
+                    sleep(0.5)
             elif 0 <= int(manager.remaining_time(i)) <= 60:  
-                manager.roommates[i].lamp.set_red()
+                print("Change lamp to orange for roommade %s" % % manager.roommates[i])
+                #manager.roommates[i].lamp.set_red()
             elif 60 <= int(manager.remaining_time(i)) <= 180:
-                manager.roommates[i].lamp.set_orange()      
+                print("Change lamp to orange for roommade %s" % % manager.roommates[i])
+                #manager.roommates[i].lamp.set_orange()      
 
     
 
