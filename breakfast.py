@@ -123,10 +123,13 @@ if __name__ == '__main__':
             print("Roommate %s has %d seconds until he should leave" % (manager.roommates[i].name, manager.remaining_time(i)))
             if int(manager.remaining_time(i)) <= 0:
                 print("Start emergency lamps for roommate %s" % manager.roommates[i].name)
+                for s in range(len(manager.roomates)):
+                        manager.roommates[s].lamp.set_red()
                 while True:
-                    # manager.roommates[i].lamp.turn_off()
+                    for s in range(len(manager.roomates)):
+                    #   manager.roommates[s].lamp.turn_off()
                     sleep(0.5)
-                    # manager.roommates[i].lamp.turn_on()
+                    #   manager.roommates[s].lamp.turn_on()
                     sleep(0.5)
             elif 0 <= int(manager.remaining_time(i)) <= 60:  
                 print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
