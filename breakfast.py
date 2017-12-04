@@ -22,21 +22,19 @@ class Manager:
         """ Set up the system by asking the user for the initializing information """
         #self.num_users = int(input("How many users will use the system?: "))
         #self.wg_location = input("Where do the users live? :")
-        self.num_users = 1
-        self.wg_location = "Olympiazentrum, Munich"
+        self.num_users = 3
+        self.wg_location = "Lothstrasse 64, Munich"
         self.roommates = []
 
         for i in range(self.num_users):
 
-            #name = input("What's the name of user %d?: " % (i))
+            name = input("What's the name of user %d?: " % (i))
             #working_location = input("Where does %s go to work?: " % name)
-            #start_time_hour = int(input("When does %s start working (hour)?: " % name))*3600
-            #start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
-            #self.start_time = start_time_hour + start_time_minute
-            name = 'mario'
+            start_time_hour = int(input("When does %s start working (hour)?: " % name))*3600
+            start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
             working_location = 'Neuperlach Süd, Munich'
-            start_time_hour = 23
-            start_time_minute = 18
+            #start_time_hour = 14
+            #start_time_minute = 25
             self.start_time = start_time_hour*3600 + start_time_minute*60
             lamp = Lamp(i+1)
             self.roommates.append(Roommate(name, working_location, 
@@ -77,8 +75,8 @@ class Lamp:
 
     def __init__(self,i):
         self.lampID = i
-        #response = requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.white)
-        #print(response.text)
+        response = requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.white)
+        print(response.text)
 
     def set_white(self):
         requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.white)
@@ -90,10 +88,10 @@ class Lamp:
         requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.red)
 
     def turn_on(self):
-        requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.red)  
+        requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.on)  
 
     def turn_off(self):
-        requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.red)      
+        requests.put('http://10.28.209.13:9003/api/2b2d3ff23d63751f10c1d8c0332d50ff/lights/' + str(self.lampID) + '/state', data=self.off)      
 
 
 class GMapsClient:
@@ -123,20 +121,24 @@ if __name__ == '__main__':
             print("Roommate %s has %d seconds until he should leave" % (manager.roommates[i].name, manager.remaining_time(i)))
             if int(manager.remaining_time(i)) <= 0:
                 print("Start emergency lamps for roommate %s" % manager.roommates[i].name)
-                for s in range(len(manager.roomates)):
+                for s in range(len(manager.roommates)):
                         manager.roommates[s].lamp.set_red()
+                print("Blinking started")
                 while True:
-                    for s in range(len(manager.roomates)):
-                    #   manager.roommates[s].lamp.turn_off()
-                    sleep(0.5)
-                    #   manager.roommates[s].lamp.turn_on()
-                    sleep(0.5)
+                    manager.roommates[0].lamp.turn_off()
+                    manager.roommates[1].lamp.turn_off()
+                    manager.roommates[2].lamp.turn_off()
+                    sleep(3)
+                    manager.roommates[0].lamp.turn_on()
+                    manager.roommates[1].lamp.turn_on()
+                    manager.roommates[2].lamp.turn_on()
+                    sleep(3)
             elif 0 <= int(manager.remaining_time(i)) <= 60:  
                 print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
-                # manager.roommates[i].lamp.set_red()
+                manager.roommates[i].lamp.set_red()
             elif 60 <= int(manager.remaining_time(i)) <= 180:
                 print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
-                # manager.roommates[i].lamp.set_orange()
+                manager.roommates[i].lamp.set_orange()
             else:
                 print("Still enough time for roommate %s!" % manager.roommates[i].name)
 
