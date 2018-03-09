@@ -22,20 +22,21 @@ class Manager:
         """ Set up the system by asking the user for the initializing information """
         #self.num_users = int(input("How many users will use the system?: "))
         #self.wg_location = input("Where do the users live? :")
-        self.num_users = 3
-        self.wg_location = "Lothstraß 64, München"
+        self.num_users = 1
+        self.wg_location = "Lothstrasse 64, Munich"
         self.roommates = []
 
         for i in range(self.num_users):
 
-            name = input("What's the name of user %d?: " % (i))
+            #name = input("What's the name of user %d?: " % (i))
+            name = 'mario'
             #working_location = input("Where does %s go to work?: " % name)
-            start_time_hour = int(input("When does %s start working (hour)?: " % name))*3600
-            start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
-            working_location = 'Neuperlach Süd, München'
-            #start_time_hour = 14
-            #start_time_minute = 25
-            start_time = start_time_hour + start_time_minute
+            #start_time_hour = int(input("When does %s start working (hour)?: " % name))*3600
+            #start_time_minute = int(input("When does %s start working (minute)?: " % name))*60
+            working_location = 'Neuperlach Süd, Munich'
+            start_time_hour = 15
+            start_time_minute = 0
+           start_time = start_time_hour*3600 + start_time_minute*60
             lamp = Lamp(i+1)
             self.roommates.append(Roommate(name, working_location, 
                 start_time, lamp))
@@ -50,7 +51,7 @@ class Manager:
         d = datetime.now()
         time_Seconds = (d.hour*3600 + d.minute*60 + d.second)
         travel_Time = self.gmaps.travel_time(self.roommates[r].work_location)
-        difference = self.roommates[r].start_time - (time_Seconds + int(travel_Time))
+        difference = roostart_time - (time_Seconds + int(travel_Time))
         return difference
 
 
@@ -64,11 +65,11 @@ class Roommate:
 
 class Lamp:
     """ Stores Lamp's data e.g. color"""  
-    w = {"on":True, "bri":155, "sat":255, "hue":6500, "ct":153}
+    w = {"on":True, "bri":255, "sat":255, "hue":6500, "ct":153}
     white = json.dumps(w)
-    o = {"on":True, "bri":155, "sat":255, "hue":9000}
+    o = {"on":True, "bri":255, "sat":255, "hue":9000}
     orange = json.dumps(o)
-    r = {"on":True, "bri":155, "sat":255, "hue":0}
+    r = {"on":True, "bri":255, "sat":255, "hue":0}
     red = json.dumps(r)
     on = json.dumps({"on":True})
     off = json.dumps({"on":False})
@@ -107,6 +108,7 @@ class GMapsClient:
             destination, mode="transit", departure_time=now)
         duration = int((directions_result[0]['legs'][0]['duration']['value']))
         #json stores information in dictionaries
+        print("Requested travel takes " + str(duration) + "seconds")
         return duration
 
 
@@ -121,16 +123,18 @@ if __name__ == '__main__':
             print("Roommate %s has %d seconds until he should leave" % (manager.roommates[i].name, manager.remaining_time(i)))
             if int(manager.remaining_time(i)) <= 0:
                 print("Start emergency lamps for roommate %s" % manager.roommates[i].name)
+                for s in range(len(manager.roommates)):
+                        manager.roommates[s].lamp.set_red()
                 print("Blinking started")
-                for i in range(2):
+                while True:
                     manager.roommates[0].lamp.turn_off()
                     manager.roommates[1].lamp.turn_off()
                     manager.roommates[2].lamp.turn_off()
-                    sleep(1)
+                    sleep(3)
                     manager.roommates[0].lamp.turn_on()
                     manager.roommates[1].lamp.turn_on()
                     manager.roommates[2].lamp.turn_on()
-                    sleep(1)
+                    sleep(3)
             elif 0 <= int(manager.remaining_time(i)) <= 60:  
                 print("Change lamp to orange for roommade %s" % manager.roommates[i].name)
                 manager.roommates[i].lamp.set_red()
