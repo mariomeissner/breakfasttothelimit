@@ -13,7 +13,7 @@ Project: Breakfast To The Limit
 Authors: M. Meissner and M. Mueller
 
 """
-API_KEY = 'AIzaSyAdmTyjsNy1iwfx4R9_L8EX3EUUdia_ve0'
+API_KEY = '#######'
 
 class Manager:
     """ Global manager that queries the API's and updates lights according to remaining time"""
